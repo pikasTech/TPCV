@@ -1,0 +1,262 @@
+{
+  "metadata": {
+    "figure_name": "figure12_main_effects",
+    "experiment_id": "E04-combined_effects",
+    "generated_timestamp": "2025-11-23T17:07:48.366850",
+    "source_timestamp": "20251120_114031",
+    "description": "Main effects analysis of sync error and noise level on CV"
+  },
+  "experimental_parameters": {
+    "sampling_rate_hz": 2000,
+    "signal_length_seconds": 600,
+    "target_frequency_hz": 10,
+    "baseline_noise_ng_sqrthz": 444,
+    "welch_nperseg": 4096,
+    "welch_overlap_ratio": 0.875,
+    "welch_window": "hann",
+    "frequency_resolution_hz": 0.488,
+    "factorial_design": {
+      "factor_a": "Synchronization error",
+      "factor_a_levels": 10,
+      "factor_a_range": "0-10 ms",
+      "factor_b": "Interference strength",
+      "factor_b_levels": 10,
+      "factor_b_range": "0.1x-10.0x baseline",
+      "total_combinations": 100,
+      "design_type": "Full factorial (10x10)",
+      "note": "Simplified from historical 10x10 design, but maintained full coverage"
+    },
+    "sync_conditions": [
+      {
+        "label": "0 samples",
+        "delays": [
+          0,
+          0,
+          0
+        ],
+        "time_delay_ms": 0.0,
+        "description": "0ms sync error"
+      },
+      {
+        "label": "2 samples",
+        "delays": [
+          0,
+          -1,
+          2
+        ],
+        "time_delay_ms": 1.0,
+        "description": "1ms sync error"
+      },
+      {
+        "label": "4 samples",
+        "delays": [
+          0,
+          -2,
+          4
+        ],
+        "time_delay_ms": 2.0,
+        "description": "2ms sync error"
+      },
+      {
+        "label": "6 samples",
+        "delays": [
+          0,
+          -3,
+          6
+        ],
+        "time_delay_ms": 3.0,
+        "description": "3ms sync error"
+      },
+      {
+        "label": "8 samples",
+        "delays": [
+          0,
+          -4,
+          8
+        ],
+        "time_delay_ms": 4.0,
+        "description": "4ms sync error"
+      },
+      {
+        "label": "10 samples",
+        "delays": [
+          0,
+          -6,
+          10
+        ],
+        "time_delay_ms": 5.0,
+        "description": "5ms sync error"
+      },
+      {
+        "label": "12 samples",
+        "delays": [
+          0,
+          -7,
+          12
+        ],
+        "time_delay_ms": 6.0,
+        "description": "6ms sync error"
+      },
+      {
+        "label": "14 samples",
+        "delays": [
+          0,
+          -8,
+          14
+        ],
+        "time_delay_ms": 7.0,
+        "description": "7ms sync error"
+      },
+      {
+        "label": "16 samples",
+        "delays": [
+          0,
+          -9,
+          16
+        ],
+        "time_delay_ms": 8.0,
+        "description": "8ms sync error"
+      },
+      {
+        "label": "18 samples",
+        "delays": [
+          0,
+          -10,
+          18
+        ],
+        "time_delay_ms": 9.0,
+        "description": "9ms sync error"
+      },
+      {
+        "label": "20 samples",
+        "delays": [
+          0,
+          -12,
+          20
+        ],
+        "time_delay_ms": 10.0,
+        "description": "10ms sync error"
+      }
+    ],
+    "signal_multipliers": [
+      0.1,
+      1.2,
+      2.3,
+      3.4,
+      4.5,
+      5.6,
+      6.7,
+      7.8,
+      8.9,
+      10.0
+    ],
+    "fixed_noise_level_v_sqrthz": 4.354e-06,
+    "tpcv_threshold": 0.2,
+    "tpcv_excellent": 0.1,
+    "tpcv_good": 0.15,
+    "experiment_id": "E04-combined_effects",
+    "timestamp": "20251120_114031",
+    "timestamp_iso": "2025-11-20T11:40:31.948368"
+  },
+  "plot_data": {
+    "panel_a_sync_effect": {
+      "x_axis": {
+        "values": [
+          0,
+          1000,
+          2000,
+          3000,
+          4000,
+          5000,
+          6000,
+          7000,
+          8000,
+          9000,
+          10000
+        ],
+        "unit": "microseconds",
+        "description": "Time synchronization error"
+      },
+      "y_axis": {
+        "mean": [
+          0.019010042526197823,
+          0.07630538990321171,
+          0.15458963689057237,
+          0.2046705626741629,
+          0.23603187506058596,
+          0.24924310401362662,
+          0.26022113013837933,
+          0.266659352352684,
+          0.26956632103612826,
+          0.2695985451482251,
+          0.25677400995365485
+        ],
+        "std": [
+          0.0019220162224015016,
+          0.04896258788480757,
+          0.09339278328210884,
+          0.10961518852321823,
+          0.1141838422162504,
+          0.10622711674616014,
+          0.10444117110181958,
+          0.10203987095943828,
+          0.0994422200313811,
+          0.09683643011705104,
+          0.08920047959026514
+        ],
+        "unit": "CV value",
+        "description": "Mean TPCV averaged over all noise levels"
+      }
+    },
+    "panel_b_noise_effect": {
+      "x_axis": {
+        "values": [
+          0.1,
+          1.2,
+          2.3,
+          3.4,
+          4.5,
+          5.6,
+          6.7,
+          7.8,
+          8.9,
+          10.0
+        ],
+        "unit": "multiplier",
+        "description": "Background noise level (× baseline)"
+      },
+      "y_axis": {
+        "mean": [
+          0.0384408672441568,
+          0.07691790781149487,
+          0.15123174632141845,
+          0.19770723321206873,
+          0.2278078830406909,
+          0.24866975773073596,
+          0.26393000300847796,
+          0.2755546598978198,
+          0.284685206145003,
+          0.2920274353130692
+        ],
+        "std": [
+          0.006373095488949736,
+          0.046350935275711214,
+          0.08497055226067712,
+          0.09871869283698999,
+          0.10329259299313645,
+          0.10440060292807803,
+          0.10414297221986836,
+          0.10338082413687966,
+          0.10250044869546646,
+          0.10167909692595556
+        ],
+        "unit": "CV value",
+        "description": "Mean TPCV averaged over all sync errors"
+      }
+    },
+    "quality_thresholds": {
+      "tpcv_excellent": 0.1,
+      "tpcv_threshold": 0.2
+    }
+  }
+}

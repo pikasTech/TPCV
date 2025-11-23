@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "experiment_name": "E02-sync_sensitivity",
+    "figure_id": "figure2",
+    "figure_type": "Time Domain Comparison (V2 - Individual Panels)",
+    "description": "Time domain analysis showing channel overlay, relative delay, and cross-correlation for ideal vs max delay synchronization. Generated as 6 individual panels then combined.",
+    "generation_method": "V2 - Individual panels + combine_figures",
+    "generation_timestamp": "2025-11-23T17:07:07.294536"
+  },
+  "experiment_parameters": {
+    "sampling_rate_hz": 2000,
+    "signal_length_seconds": 600,
+    "target_frequency_hz": 10,
+    "welch_nperseg": 4096,
+    "welch_overlap_ratio": 0.875,
+    "welch_window": "hann",
+    "random_seed": 42,
+    "display_duration_seconds": 0.1
+  },
+  "plot_data": {
+    "subplot_layout": "3x2",
+    "individual_panels": [
+      "D:\\Work\\noise_paper\\code_release\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_a.png",
+      "D:\\Work\\noise_paper\\code_release\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_b.png",
+      "D:\\Work\\noise_paper\\code_release\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_c.png",
+      "D:\\Work\\noise_paper\\code_release\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_d.png",
+      "D:\\Work\\noise_paper\\code_release\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_e.png",
+      "D:\\Work\\noise_paper\\code_release\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_f.png"
+    ],
+    "row1_overlay": {
+      "description": "Three-channel overlay comparison",
+      "panel_a": "Ideal sync channel overlay",
+      "panel_b": "Max delay channel overlay"
+    },
+    "row2_relative_delay": {
+      "description": "Relative delay (Ch2-Ch1 and Ch3-Ch1)",
+      "panel_c": "Ideal sync relative delay",
+      "panel_d": "Max delay relative delay"
+    },
+    "row3_cross_correlation": {
+      "description": "Cross-correlation between channels",
+      "panel_e": "Ideal sync cross-correlation",
+      "panel_f": "Max delay cross-correlation",
+      "lag_range_ms": [
+        -20,
+        20
+      ]
+    }
+  },
+  "data_sources": {
+    "ideal_experiment": "E02-sync_sensitivity (0 μs delay)",
+    "max_delay_experiment": "E02-sync_level4_v2 (10000 μs delay)"
+  }
+}

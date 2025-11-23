@@ -1,0 +1,85 @@
+{
+  "experiment_type": "single_three_channel_experiment",
+  "description": "E02: Time synchronization sensitivity analysis with multiple delay levels (0, 5, 10, 15, 20 samples)",
+  "signal_parameters": {
+    "sampling_rate_hz": 2000,
+    "signal_length_seconds": 600,
+    "target_frequency_hz": 10,
+    "signal_asd_ng_sqrthz": 20,
+    "noise_asd_ng_sqrthz": 10,
+    "_unit_note": "20 ng/sqrt(Hz) signal : 10 ng/sqrt(Hz) noise (SNR = 6 dB)"
+  },
+  "welch_parameters": {
+    "nperseg": 4096,
+    "overlap_ratio": 0.875,
+    "window": "hann"
+  },
+  "computation_settings": {
+    "random_seed": 1
+  },
+  "experimental_conditions": {
+    "synchronization_delays": {
+      "channel_1_samples": 0,
+      "channel_2_samples": 0,
+      "channel_3_samples": 0,
+      "description": "Level 0: No synchronization error (baseline)"
+    }
+  },
+  "multi_level_config": {
+    "enabled": true,
+    "description": "This experiment includes multiple synchronization delay levels for sensitivity analysis",
+    "levels": [
+      {
+        "level": 0,
+        "delay_samples": 0,
+        "delay_time_ms": 0,
+        "description": "Level 0: No delay (ideal synchronization)",
+        "channel_1_samples": 0,
+        "channel_2_samples": 0,
+        "channel_3_samples": 0
+      },
+      {
+        "level": 1,
+        "delay_samples": 5,
+        "delay_time_ms": 2.5,
+        "description": "Level 1: ±5 samples (±2.5ms at 2000Hz)",
+        "channel_1_samples": 0,
+        "channel_2_samples": -5,
+        "channel_3_samples": 5
+      },
+      {
+        "level": 2,
+        "delay_samples": 10,
+        "delay_time_ms": 5.0,
+        "description": "Level 2: ±10 samples (±5.0ms at 2000Hz)",
+        "channel_1_samples": 0,
+        "channel_2_samples": -10,
+        "channel_3_samples": 10
+      },
+      {
+        "level": 3,
+        "delay_samples": 15,
+        "delay_time_ms": 7.5,
+        "description": "Level 3: ±15 samples (±7.5ms at 2000Hz)",
+        "channel_1_samples": 0,
+        "channel_2_samples": -15,
+        "channel_3_samples": 15
+      },
+      {
+        "level": 4,
+        "delay_samples": 20,
+        "delay_time_ms": 10.0,
+        "description": "Level 4: ±20 samples (±10.0ms at 2000Hz)",
+        "channel_1_samples": 0,
+        "channel_2_samples": -20,
+        "channel_3_samples": 20
+      }
+    ],
+    "notes": [
+      "Symmetric delay design: Ch1 = reference (0), Ch2 = negative delay, Ch3 = positive delay",
+      "Same signal model as baseline: coherent white noise + independent white noise",
+      "All delays are applied using np.roll (circular shift)",
+      "Positive values indicate delay (shift right), negative values indicate advance (shift left)"
+    ]
+  }
+}

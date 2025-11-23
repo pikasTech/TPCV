@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "experiment_type": "single_three_channel_experiment",
+    "experiment_id": "E01-algorithm_verification",
+    "timestamp": "20251117_120936",
+    "timestamp_iso": "2025-11-17T12:09:36.104636",
+    "config_file": "exams\\E01-algorithm_verification\\config.json",
+    "noise_amplitude_ng_sqrthz": 10,
+    "signal_amplitude_ng_sqrthz": 20,
+    "snr_db": 6.020599913279624,
+    "target_frequency_hz": 10,
+    "sampling_rate_hz": 2000,
+    "synchronization_delays": {
+      "channel_1_samples": 0,
+      "channel_2_samples": 0,
+      "channel_3_samples": 0,
+      "description": "No synchronization error (ideal case) - perfect alignment between channels"
+    },
+    "algorithm": "three_channel_correlation_sleeman",
+    "theoretical_symmetry_verified": false,
+    "theoretical_groups": {
+      "物理通道1": [
+        "123",
+        "132"
+      ],
+      "物理通道2": [
+        "213",
+        "231"
+      ],
+      "物理通道3": [
+        "312",
+        "321"
+      ]
+    },
+    "note": "所有结果均为10Hz处的噪声幅度值",
+    "units": {
+      "noise_asd": "ng/sqrt(Hz)",
+      "frequency": "Hz"
+    }
+  },
+  "results": {
+    "physical_channel_1": {
+      "original_noise": 22.989816849182592,
+      "123": 9.777466802733127,
+      "132": 9.786514675559664
+    },
+    "physical_channel_2": {
+      "original_noise": 22.88882234373121,
+      "213": 10.252097540210759,
+      "231": 10.235905572466022
+    },
+    "physical_channel_3": {
+      "original_noise": 22.72242334919024,
+      "312": 9.983433975545033,
+      "321": 9.958331342124406
+    }
+  }
+}

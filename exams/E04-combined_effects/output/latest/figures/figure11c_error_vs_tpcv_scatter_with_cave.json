@@ -1,0 +1,406 @@
+{
+  "metadata": {
+    "figure_name": "figure11c_error_vs_tpcv_scatter_with_cave",
+    "experiment_id": "E04-combined_effects",
+    "generated_timestamp": "2025-11-23T17:07:41.631955",
+    "source_timestamp": "20251120_114031",
+    "description": "Single panel zoomed view (Error<1.5) with multiple cave experiment configurations"
+  },
+  "experimental_parameters": {
+    "sampling_rate_hz": 2000,
+    "signal_length_seconds": 600,
+    "target_frequency_hz": 10,
+    "baseline_noise_ng_sqrthz": 444,
+    "welch_nperseg": 4096,
+    "welch_overlap_ratio": 0.875,
+    "welch_window": "hann",
+    "frequency_resolution_hz": 0.488,
+    "factorial_design": {
+      "factor_a": "Synchronization error",
+      "factor_a_levels": 10,
+      "factor_a_range": "0-10 ms",
+      "factor_b": "Interference strength",
+      "factor_b_levels": 10,
+      "factor_b_range": "0.1x-10.0x baseline",
+      "total_combinations": 100,
+      "design_type": "Full factorial (10x10)",
+      "note": "Simplified from historical 10x10 design, but maintained full coverage"
+    },
+    "sync_conditions": [
+      {
+        "label": "0 samples",
+        "delays": [
+          0,
+          0,
+          0
+        ],
+        "time_delay_ms": 0.0,
+        "description": "0ms sync error"
+      },
+      {
+        "label": "2 samples",
+        "delays": [
+          0,
+          -1,
+          2
+        ],
+        "time_delay_ms": 1.0,
+        "description": "1ms sync error"
+      },
+      {
+        "label": "4 samples",
+        "delays": [
+          0,
+          -2,
+          4
+        ],
+        "time_delay_ms": 2.0,
+        "description": "2ms sync error"
+      },
+      {
+        "label": "6 samples",
+        "delays": [
+          0,
+          -3,
+          6
+        ],
+        "time_delay_ms": 3.0,
+        "description": "3ms sync error"
+      },
+      {
+        "label": "8 samples",
+        "delays": [
+          0,
+          -4,
+          8
+        ],
+        "time_delay_ms": 4.0,
+        "description": "4ms sync error"
+      },
+      {
+        "label": "10 samples",
+        "delays": [
+          0,
+          -6,
+          10
+        ],
+        "time_delay_ms": 5.0,
+        "description": "5ms sync error"
+      },
+      {
+        "label": "12 samples",
+        "delays": [
+          0,
+          -7,
+          12
+        ],
+        "time_delay_ms": 6.0,
+        "description": "6ms sync error"
+      },
+      {
+        "label": "14 samples",
+        "delays": [
+          0,
+          -8,
+          14
+        ],
+        "time_delay_ms": 7.0,
+        "description": "7ms sync error"
+      },
+      {
+        "label": "16 samples",
+        "delays": [
+          0,
+          -9,
+          16
+        ],
+        "time_delay_ms": 8.0,
+        "description": "8ms sync error"
+      },
+      {
+        "label": "18 samples",
+        "delays": [
+          0,
+          -10,
+          18
+        ],
+        "time_delay_ms": 9.0,
+        "description": "9ms sync error"
+      },
+      {
+        "label": "20 samples",
+        "delays": [
+          0,
+          -12,
+          20
+        ],
+        "time_delay_ms": 10.0,
+        "description": "10ms sync error"
+      }
+    ],
+    "signal_multipliers": [
+      0.1,
+      1.2,
+      2.3,
+      3.4,
+      4.5,
+      5.6,
+      6.7,
+      7.8,
+      8.9,
+      10.0
+    ],
+    "fixed_noise_level_v_sqrthz": 4.354e-06,
+    "tpcv_threshold": 0.2,
+    "tpcv_excellent": 0.1,
+    "tpcv_good": 0.15,
+    "experiment_id": "E04-combined_effects",
+    "timestamp": "20251120_114031",
+    "timestamp_iso": "2025-11-20T11:40:31.948368"
+  },
+  "cave_test_data": {
+    "raw_data": {
+      "pre_compensation": {
+        "tpcv_values_percent": [
+          29.6,
+          61.0,
+          26.4
+        ],
+        "noise_values_ng": [
+          6.89,
+          5.22,
+          5.91
+        ]
+      },
+      "post_compensation": {
+        "tpcv_values_percent": [
+          1.7,
+          11.9,
+          1.2
+        ],
+        "noise_values_ng": [
+          2.96,
+          2.58,
+          4.65
+        ]
+      }
+    },
+    "statistics": {
+      "pre_compensation": {
+        "tpcv_mean": 0.39,
+        "tpcv_median": 0.29600000000000004,
+        "noise_mean": 6.006666666666667,
+        "noise_median": 5.91,
+        "noise_min": 5.22,
+        "noise_max": 6.89
+      },
+      "post_compensation": {
+        "tpcv_mean": 0.049333333333333326,
+        "tpcv_median": 0.017,
+        "noise_mean": 3.396666666666667,
+        "noise_median": 2.96,
+        "noise_min": 2.58,
+        "noise_max": 4.65
+      }
+    },
+    "all_configurations": [
+      {
+        "state": "pre",
+        "tpcv_type": "median",
+        "baseline_type": "min",
+        "error": 1.2906976744186047,
+        "tpcv": 0.29600000000000004,
+        "distance_to_sim": 0.016755598083983265
+      },
+      {
+        "state": "post",
+        "tpcv_type": "mean",
+        "baseline_type": "median",
+        "error": 0.12837837837837834,
+        "tpcv": 0.049333333333333326,
+        "distance_to_sim": 0.030688709612594005
+      },
+      {
+        "state": "post",
+        "tpcv_type": "median",
+        "baseline_type": "median",
+        "error": 0.12837837837837834,
+        "tpcv": 0.017,
+        "distance_to_sim": 0.03886498411145985
+      },
+      {
+        "state": "post",
+        "tpcv_type": "mean",
+        "baseline_type": "min",
+        "error": 0.1472868217054263,
+        "tpcv": 0.049333333333333326,
+        "distance_to_sim": 0.04925333151677699
+      },
+      {
+        "state": "post",
+        "tpcv_type": "median",
+        "baseline_type": "min",
+        "error": 0.1472868217054263,
+        "tpcv": 0.017,
+        "distance_to_sim": 0.0547227627025486
+      },
+      {
+        "state": "pre",
+        "tpcv_type": "median",
+        "baseline_type": "mean",
+        "error": 0.7399411187438665,
+        "tpcv": 0.29600000000000004,
+        "distance_to_sim": 0.087388075543309
+      },
+      {
+        "state": "pre",
+        "tpcv_type": "median",
+        "baseline_type": "median",
+        "error": 0.9966216216216217,
+        "tpcv": 0.29600000000000004,
+        "distance_to_sim": 0.09139849716784769
+      },
+      {
+        "state": "post",
+        "tpcv_type": "mean",
+        "baseline_type": "mean",
+        "error": 0.24043179587831212,
+        "tpcv": 0.049333333333333326,
+        "distance_to_sim": 0.1043017613963064
+      },
+      {
+        "state": "pre",
+        "tpcv_type": "mean",
+        "baseline_type": "min",
+        "error": 1.2906976744186047,
+        "tpcv": 0.39,
+        "distance_to_sim": 0.10839879558457503
+      },
+      {
+        "state": "post",
+        "tpcv_type": "mean",
+        "baseline_type": "max",
+        "error": 0.36344086021505384,
+        "tpcv": 0.049333333333333326,
+        "distance_to_sim": 0.11136881269494056
+      },
+      {
+        "state": "post",
+        "tpcv_type": "median",
+        "baseline_type": "mean",
+        "error": 0.24043179587831212,
+        "tpcv": 0.017,
+        "distance_to_sim": 0.1328259449439902
+      },
+      {
+        "state": "post",
+        "tpcv_type": "median",
+        "baseline_type": "max",
+        "error": 0.36344086021505384,
+        "tpcv": 0.017,
+        "distance_to_sim": 0.13844452557242065
+      },
+      {
+        "state": "pre",
+        "tpcv_type": "mean",
+        "baseline_type": "median",
+        "error": 0.9966216216216217,
+        "tpcv": 0.39,
+        "distance_to_sim": 0.148354326533592
+      },
+      {
+        "state": "pre",
+        "tpcv_type": "median",
+        "baseline_type": "max",
+        "error": 0.2709677419354838,
+        "tpcv": 0.29600000000000004,
+        "distance_to_sim": 0.16016482689276204
+      },
+      {
+        "state": "pre",
+        "tpcv_type": "mean",
+        "baseline_type": "mean",
+        "error": 0.7399411187438665,
+        "tpcv": 0.39,
+        "distance_to_sim": 0.17309108870744294
+      },
+      {
+        "state": "pre",
+        "tpcv_type": "mean",
+        "baseline_type": "max",
+        "error": 0.2709677419354838,
+        "tpcv": 0.39,
+        "distance_to_sim": 0.25345096515721954
+      }
+    ],
+    "best_configurations": {
+      "pre_compensation": {
+        "tpcv_type": "median",
+        "baseline_type": "min",
+        "error": 1.2906976744186047,
+        "tpcv": 0.29600000000000004,
+        "distance": 0.016755598083983265
+      },
+      "post_compensation": {
+        "tpcv_type": "mean",
+        "baseline_type": "median",
+        "error": 0.12837837837837834,
+        "tpcv": 0.049333333333333326,
+        "distance": 0.030688709612594005
+      }
+    }
+  },
+  "simulation_data": {
+    "n_bins": 10,
+    "error_bin_centers": [
+      0.09858839198770292,
+      0.2957410325254672,
+      0.49289367306323145,
+      0.6900463136009958,
+      0.8871989541387599,
+      1.0843515946765243,
+      1.2815042352142885,
+      1.4786568757520528,
+      1.675809516289817,
+      1.8729621568275814
+    ],
+    "tpcv_means": [
+      0.04196084335168584,
+      0.13776265975777824,
+      0.19140582259222969,
+      0.22425612104912337,
+      0.2532339636725627,
+      0.27036531427290117,
+      0.2819917616115186,
+      0.30982626866941954,
+      0.3007944651783412,
+      0.3161389742696748
+    ],
+    "tpcv_stds": [
+      0.024801562174957027,
+      0.016158887464927118,
+      0.025096207577865785,
+      0.015821773713775297,
+      0.010813010548737317,
+      0.016582485275181233,
+      0.021833604434572246,
+      0.015997514657147167,
+      0.0,
+      0.017535980097614704
+    ],
+    "error_range": [
+      1.2071718820783062e-05,
+      1.9715384770964635
+    ],
+    "error_limit": 1.5,
+    "n_points": 75,
+    "intersections": {
+      "error_at_cv010": 0.21802843411901682,
+      "error_at_cv020": 0.5444720406514368
+    }
+  },
+  "quality_thresholds": {
+    "tpcv_excellent": 0.1,
+    "tpcv_threshold": 0.2
+  }
+}

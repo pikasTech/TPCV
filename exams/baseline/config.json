@@ -1,0 +1,29 @@
+{
+  "experiment_type": "single_three_channel_experiment",
+  "signal_parameters": {
+    "sampling_rate_hz": 2000,
+    "signal_length_seconds": 600,
+    "target_frequency_hz": 10,
+    "signal_asd_ng_sqrthz": 20,
+    "_legacy_signal_psd_amplitude_v_sqrthz": 4.56e-06,
+    "noise_asd_ng_sqrthz": 10,
+    "_legacy_noise_psd_amplitude_v_sqrthz": 1e-06,
+    "_unit_conversion_note": "Units converted from V/sqrt(Hz) to ng/sqrt(Hz) using conversion factor 6.4071e+09 (sensitivity=1 V/(m/s), frequency=10 Hz)"
+  },
+  "welch_parameters": {
+    "nperseg": 4096,
+    "overlap_ratio": 0.875,
+    "window": "hann"
+  },
+  "computation_settings": {
+    "random_seed": 42
+  },
+  "experimental_conditions": {
+    "synchronization_delays": {
+      "channel_1_samples": 0,
+      "channel_2_samples": -3,
+      "channel_3_samples": 3,
+      "description": "±3采样点时间偏移实验条件"
+    }
+  }
+}

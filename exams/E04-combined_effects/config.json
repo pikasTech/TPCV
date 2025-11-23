@@ -1,0 +1,316 @@
+{
+  "experiment_name": "E04-combined_effects",
+  "experiment_type": "noise_gradient_analysis",
+  "description": "Combined effects analysis (10x10 factorial design): Systematic study of time synchronization error and external signal strength dual-factor interaction effects. Tests 10 sync error levels (0-22.5 ms) 脳 10 signal strength levels (0.1x-10.0x baseline) for a total of 100 test conditions. Uses two-way ANOVA to quantify interaction effect statistical significance.",
+  "author": "Claude AI Assistant",
+  "created": "2025-11-08",
+  "signal_parameters": {
+    "sampling_rate_hz": 2000,
+    "signal_length_seconds": 600,
+    "target_frequency_hz": 10,
+    "note": "鈿狅笍 WARNING: Baseline self-noise is 444 ng/sqrt(Hz) for this experiment, different from E01-E03 (222 ng/sqrt(Hz) [or 29216 ng/sqrt(Hz) from old conversion])",
+    "signal_asd_ng_sqrthz": 444,
+    "_legacy_signal_psd_amplitude_v_sqrthz": 4.354e-06,
+    "_unit_conversion_note": "Units standardized to ng/sqrt(Hz), legacy V/sqrt(Hz) value archived",
+    "signal_psd_amplitude_v_sqrthz": 4.354e-06,
+    "noise_asd_ng_sqrthz": 444
+  },
+  "welch_parameters": {
+    "nperseg": 4096,
+    "overlap_ratio": 0.875,
+    "window": "hann",
+    "frequency_resolution_hz": 0.488
+  },
+  "computation_settings": {
+    "random_seed": 42
+  },
+  "experimental_conditions": {
+    "synchronization_error_config": {
+      "enable_sync_analysis": true,
+      "max_sync_error_samples": 20,
+      "sync_error_conditions": [
+        {
+          "label": "0 samples",
+          "delays": [
+            0,
+            0,
+            0
+          ],
+          "time_delay_ms": 0.0,
+          "description": "0ms sync error"
+        },
+        {
+          "label": "2 samples",
+          "delays": [
+            0,
+            -1,
+            2
+          ],
+          "time_delay_ms": 1.0,
+          "description": "1ms sync error"
+        },
+        {
+          "label": "4 samples",
+          "delays": [
+            0,
+            -2,
+            4
+          ],
+          "time_delay_ms": 2.0,
+          "description": "2ms sync error"
+        },
+        {
+          "label": "6 samples",
+          "delays": [
+            0,
+            -3,
+            6
+          ],
+          "time_delay_ms": 3.0,
+          "description": "3ms sync error"
+        },
+        {
+          "label": "8 samples",
+          "delays": [
+            0,
+            -4,
+            8
+          ],
+          "time_delay_ms": 4.0,
+          "description": "4ms sync error"
+        },
+        {
+          "label": "10 samples",
+          "delays": [
+            0,
+            -6,
+            10
+          ],
+          "time_delay_ms": 5.0,
+          "description": "5ms sync error"
+        },
+        {
+          "label": "12 samples",
+          "delays": [
+            0,
+            -7,
+            12
+          ],
+          "time_delay_ms": 6.0,
+          "description": "6ms sync error"
+        },
+        {
+          "label": "14 samples",
+          "delays": [
+            0,
+            -8,
+            14
+          ],
+          "time_delay_ms": 7.0,
+          "description": "7ms sync error"
+        },
+        {
+          "label": "16 samples",
+          "delays": [
+            0,
+            -9,
+            16
+          ],
+          "time_delay_ms": 8.0,
+          "description": "8ms sync error"
+        },
+        {
+          "label": "18 samples",
+          "delays": [
+            0,
+            -10,
+            18
+          ],
+          "time_delay_ms": 9.0,
+          "description": "9ms sync error"
+        },
+        {
+          "label": "20 samples",
+          "delays": [
+            0,
+            -12,
+            20
+          ],
+          "time_delay_ms": 10.0,
+          "description": "10ms sync error"
+        }
+      ],
+      "sync_seed": 123,
+      "delay_method": "roll"
+    }
+  },
+  "external_interference_config": {
+    "fixed_noise_level_ng_sqrthz": 444,
+    "signal_multipliers": [
+      0.1,
+      1.2,
+      2.3,
+      3.4,
+      4.5,
+      5.6,
+      6.7,
+      7.8,
+      8.9,
+      10.0
+    ],
+    "signal_level_labels": [
+      "0.1x baseline",
+      "1.2x baseline",
+      "2.3x baseline",
+      "3.4x baseline",
+      "4.5x baseline",
+      "5.6x baseline",
+      "6.7x baseline",
+      "7.8x baseline",
+      "8.9x baseline",
+      "10.0x baseline"
+    ],
+    "signal_strength_absolute_ng_sqrthz": [
+      44,
+      533,
+      1021,
+      1510,
+      1998,
+      2486,
+      2975,
+      3463,
+      3951,
+      4440
+    ],
+    "interference_db_levels": [
+      -26.0,
+      -4.4,
+      1.2,
+      4.6,
+      7.0,
+      8.9,
+      10.5,
+      11.8,
+      13.0,
+      14.0
+    ],
+    "performance_metrics": [
+      "cv_mean_and_std",
+      "critical_combination_identification",
+      "two_way_anova_statistics",
+      "interaction_effect_quantification"
+    ],
+    "_legacy_fixed_noise_level_v_sqrthz": 4.354e-06,
+    "fixed_noise_level_v_sqrthz": 4.354e-06
+  },
+  "factorial_design": {
+    "factor_a": "Synchronization error",
+    "factor_a_levels": 10,
+    "factor_a_range": "0-10 ms",
+    "factor_b": "Interference strength",
+    "factor_b_levels": 10,
+    "factor_b_range": "0.1x-10.0x baseline",
+    "total_combinations": 100,
+    "design_type": "Full factorial (10x10)",
+    "note": "Simplified from historical 10x10 design, but maintained full coverage"
+  },
+  "analysis_objectives": {
+    "primary": "Evaluate dual-factor interaction effects of time synchronization error and external signal strength, validate limitations of single-factor analysis",
+    "secondary": [
+      "Systematically explore nonlinear interaction patterns through 10x10 factorial design (sync error: 0-10 ms 脳 signal strength: 0.1x-10x)",
+      "Quantify statistical significance of 'synergistic degradation' using two-way ANOVA analysis",
+      "Identify critical combinations that cause CV to exceed 0.20 threshold",
+      "Provide experimental support for failure analysis in Method 搂2.2.3",
+      "Establish quality control protocols for practical measurements"
+    ]
+  },
+  "performance_evaluation": {
+    "quality_indicators": [
+      "CV mean and standard deviation at different combinations",
+      "Critical combination identification (CV first exceeds 0.20 threshold)",
+      "Two-way ANOVA (F-statistic, p-value, effect size eta-squared)",
+      "Main effects and interaction effects"
+    ],
+    "cv_threshold": 0.2,
+    "cv_excellent": 0.1,
+    "cv_good": 0.15,
+    "cv_suspect": 0.2,
+    "coherence_threshold": 0.3
+  },
+  "expected_scientific_insights": {
+    "high_resolution_mapping": "Obtain high-resolution performance distribution map through 10x10 matrix",
+    "gradient_continuity": "Equally-spaced sampling reveals continuity and critical transition points in performance changes",
+    "fixed_error_reproducibility": "Fixed sync error values ensure precise reproducibility of results",
+    "interaction_patterns": "Dense sampling identifies fine-grained patterns of interference-sync interaction",
+    "optimization_landscape": "Establish complete performance landscape for parameter optimization",
+    "statistical_significance": "Interaction term reaches statistical significance (p < 0.01, eta-squared > 10%)"
+  },
+  "visualization_requirements": {
+    "main_plots": [
+      "Time sync and noise interaction heatmap (2D color-coded heatmap)",
+      "Main effects analysis (2 subplots: sync effect and noise effect)",
+      "Interaction effect multi-line plot (4 lines representing 4 noise levels)",
+      "Critical combination identification (contour lines on heatmap)"
+    ],
+    "heatmap_details": {
+      "x_axis": "Delta_t (0, 2500, 5000, 7500, 10000 us)",
+      "y_axis": "Noise level (1-10)",
+      "z_axis_color": "CV value (0.0-0.5)",
+      "color_scheme": {
+        "deep_blue": "CV < 0.10 (excellent quality)",
+        "light_blue_green": "0.10-0.15 (acceptable)",
+        "yellow_orange": "0.15-0.20 (suspect)",
+        "red": "CV > 0.20 (unreliable)"
+      },
+      "contour_line": "CV = 0.20 critical line (bold black)",
+      "grid_annotations": "Label specific CV mean at each grid point",
+      "region_boxes": "Mark 'safe zone', 'critical zone', 'danger zone'"
+    },
+    "reference_lines": [
+      "Horizontal dashed line: CV = 0.20 quality threshold",
+      "Quality zone boundaries on heatmap"
+    ]
+  },
+  "quality_control": {
+    "gradient_completeness": true,
+    "performance_consistency_threshold": 0.05,
+    "cross_level_validation": true,
+    "scientific_significance_check": true,
+    "matrix_density": "10x10",
+    "total_conditions": 100,
+    "numerical_stability_check": true,
+    "negative_value_detection": true
+  },
+  "research_innovation": {
+    "novelty_type": "First study to use 10x10 high-density parameter matrix to systematically investigate combined effects of time sync error and external interference on self-noise measurement",
+    "knowledge_gap_filled": "Provide high-resolution quantitative assessment of self-noise measurement reliability under dual-factor stress conditions",
+    "theoretical_contribution": "Establish dual-factor interaction model based on dense sampling for accurate prediction of self-noise measurement error under combined stress",
+    "practical_impact": "Provide fine-grained technical specifications and optimization guidance for self-noise measurement in real environments. Maintain CV<0.20 requires avoiding combinations of Delta_t>7500 渭s AND noise level>Level 3."
+  },
+  "expected_results": {
+    "ideal_conditions": {
+      "sync_error_us": 0,
+      "noise_level": 1,
+      "expected_cv_max": 0.1,
+      "quality_rating": "Excellent"
+    },
+    "worst_case": {
+      "sync_error_us": 10000,
+      "noise_level": 10,
+      "expected_cv_min": 0.4,
+      "quality_rating": "Unreliable"
+    },
+    "critical_boundary": {
+      "sync_error_threshold_us": 7500,
+      "noise_level_threshold": 3,
+      "cv_threshold": 0.2,
+      "note": "Combinations exceeding both thresholds will exceed CV=0.20"
+    },
+    "anova_results": {
+      "interaction_effect_p_value": "<0.01",
+      "interaction_effect_eta_squared_percent": ">10",
+      "main_effect_sync_significant": true,
+      "main_effect_noise_significant": true
+    }
+  }
+}

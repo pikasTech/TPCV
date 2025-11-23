@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "experiment_name": "E02-sync_sensitivity",
+    "figure_id": "figure5",
+    "figure_type": "TPCV vs Time Synchronization Error",
+    "description": "Two-Path Coefficient of Variation vs Time Synchronization Error across 5 delay levels (±representation)",
+    "representation_note": "R16 (2025-11-21): Changed from span to ±notation for academic convention",
+    "generation_timestamp": "2025-11-23T17:07:07.728088"
+  },
+  "experiment_parameters": {
+    "sampling_rate_hz": 2000,
+    "signal_length_seconds": 600,
+    "target_frequency_hz": 10,
+    "welch_nperseg": 4096,
+    "welch_overlap_ratio": 0.875,
+    "welch_window": "hann",
+    "random_seed": 42,
+    "delay_representation": "half_span"
+  },
+  "plot_data": {
+    "x_axis": {
+      "label": "Time Synchronization Error (μs)",
+      "values": [
+        0,
+        1250,
+        2500,
+        3750,
+        5000
+      ],
+      "unit": "microseconds",
+      "representation": "±half_span",
+      "note": "Values represent ±half of the maximum channel span"
+    },
+    "y_axis": {
+      "label": "Two-Path Coefficient of Variation (TPCV)",
+      "values": [
+        0.0006579820805147583,
+        0.049600703897631965,
+        0.15568339242775753,
+        0.21986316334563874,
+        0.28325480009319953
+      ],
+      "unit": "dimensionless"
+    },
+    "threshold_line": {
+      "value": 0.2,
+      "description": "TPCV threshold for quality assessment"
+    }
+  },
+  "data_sources": {
+    "experiments": [
+      "E02-sync_sensitivity",
+      "E02-sync_level1_v2",
+      "E02-sync_level2_v2",
+      "E02-sync_level3_v2",
+      "E02-sync_level4_v2"
+    ]
+  }
+}

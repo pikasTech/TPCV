@@ -1,0 +1,56 @@
+{
+  "experiment_type": "single_three_channel_experiment",
+  "metadata": {
+    "experiment_id": "E01",
+    "title": "Algorithm Verification Experiment",
+    "description": "Baseline verification of three-channel correlation algorithm under ideal conditions",
+    "purpose": "Verify core algorithm implementation correctness with perfect synchronization",
+    "date_created": "2025-11-08",
+    "reference": "Xu Weiwei et al. (2017) - Multi-channel correlation analysis for broadband seismometer self-noise detection"
+  },
+  "signal_parameters": {
+    "sampling_rate_hz": 2000,
+    "signal_length_seconds": 600,
+    "target_frequency_hz": 10,
+    "description": "Signal model: X_i(t) = S(t) + N_i(t), where S(t) is common signal and N_i(t) is independent noise",
+    "signal_asd_ng_sqrthz": 20,
+    "_legacy_signal_psd_amplitude_v_sqrthz": 4.56e-06,
+    "noise_asd_ng_sqrthz": 10,
+    "_legacy_noise_psd_amplitude_v_sqrthz": 1e-06,
+    "_unit_conversion_note": "Units converted from V/sqrt(Hz) to ng/sqrt(Hz) using conversion factor 6.4071e+09 (sensitivity=1 V/(m/s), frequency=10 Hz)"
+  },
+  "welch_parameters": {
+    "nperseg": 4096,
+    "overlap_ratio": 0.875,
+    "window": "hann",
+    "description": "Welch method for power spectral density estimation with 87.5% overlap"
+  },
+  "computation_settings": {
+    "random_seed": 42,
+    "description": "Fixed random seed for reproducibility"
+  },
+  "experimental_conditions": {
+    "synchronization_delays": {
+      "channel_1_samples": 0,
+      "channel_2_samples": 0,
+      "channel_3_samples": 0,
+      "description": "No synchronization error (ideal case) - perfect alignment between channels"
+    },
+    "test_conditions": {
+      "signal_to_noise_ratio_db": 13.18,
+      "noise_floor_conceptual_ng_sqrthz": 100,
+      "signal_amplitude_conceptual_ng_sqrthz": 456,
+      "note": "Config uses V/sqrt(Hz) units; ng/sqrt(Hz) values are conceptual references only"
+    }
+  },
+  "expected_outcomes": {
+    "algorithm_behavior": "Should correctly separate signal and noise components",
+    "symmetry_properties": "Results should exhibit mathematical symmetry across channel permutations",
+    "numerical_stability": "No negative values, NaN, or infinity in computed self-noise",
+    "validation_criteria": [
+      "Self-noise estimates close to true noise level (1e-6 V/sqrt(Hz))",
+      "Consistent results across all 6 channel permutations",
+      "No computational artifacts or numerical instabilities"
+    ]
+  }
+}

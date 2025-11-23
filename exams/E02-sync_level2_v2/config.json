@@ -1,0 +1,28 @@
+{
+  "experiment_type": "single_three_channel_experiment",
+  "description": "E02-sync_level2_v2: Time synchronization sensitivity analysis - Level 2 (10 samples = 5.0ms delay)",
+  "signal_parameters": {
+    "sampling_rate_hz": 2000,
+    "signal_length_seconds": 600,
+    "target_frequency_hz": 10,
+    "signal_asd_ng_sqrthz": 20,
+    "noise_asd_ng_sqrthz": 10,
+    "_unit_note": "20 ng/sqrt(Hz) signal : 10 ng/sqrt(Hz) noise (SNR = 6 dB)"
+  },
+  "welch_parameters": {
+    "nperseg": 4096,
+    "overlap_ratio": 0.875,
+    "window": "hann"
+  },
+  "computation_settings": {
+    "random_seed": 1
+  },
+  "experimental_conditions": {
+    "synchronization_delays": {
+      "channel_1_samples": 0,
+      "channel_2_samples": -5,
+      "channel_3_samples": 5,
+      "description": "Level 2: Ch1=0, Ch2=-5, Ch3=+5 (10 samples span = 5.0ms)"
+    }
+  }
+}
