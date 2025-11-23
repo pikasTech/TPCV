@@ -1,4 +1,4 @@
-# Three-Channel Correlation Algorithm - Figure Generation Code
+# Three-Channel Correlation Algorithm
 
 This repository contains the code and data for generating figures in the paper:
 **"Two-Path Coefficient of Variation: A Novel Quality Criterion for Three-Channel Self-Noise Estimation"**
