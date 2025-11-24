@@ -193,7 +193,7 @@ def generate_f05_interaction_heatmap(data, output_path, params=None):
     if SCIENCEPLOTS_AVAILABLE:
         plt.style.use(['science', 'ieee'])
 
-    # 强制serif字体（IEEE要求，必须在style.use之后设置以覆盖默认）
+    # Force serif font (IEEE requirement, must be set after style.use to override defaults)
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.serif'] = ['Times New Roman', 'DejaVu Serif', 'Liberation Serif']
 
@@ -220,7 +220,7 @@ def generate_f05_interaction_heatmap(data, output_path, params=None):
     sync_times_us = [extract_sync_time_us(s) for s in sync_levels]
     noise_multipliers = [extract_noise_multiplier(n) for n in noise_levels]
 
-    # 过滤数据：只保留 sync_times_us <= 15000 的部分
+    # Filter data: only keep sync_times_us <= 15000 portion
     sync_limit_us = 15000
     sync_indices = np.array([i for i, t in enumerate(sync_times_us) if t <= sync_limit_us])
     sync_times_us_filtered = [sync_times_us[i] for i in sync_indices]
@@ -236,16 +236,16 @@ def generate_f05_interaction_heatmap(data, output_path, params=None):
     # Create meshgrid for contours
     X, Y = np.meshgrid(sync_times_us_filtered, noise_multipliers)
 
-    # ========== Panel A: TPCV Heatmap ==========
+    # Panel A: TPCV Heatmap
     from matplotlib.colors import LinearSegmentedColormap
-    # 统一使用蓝色到红色的配色（Blue to Red）
+    # Unified blue to red colormap (Blue to Red)
     colors = ['#0d47a1', '#1976d2', '#42a5f5', '#81c784', '#ffd54f', '#ff9800', '#f44336']
     n_bins = 100
     cmap_cv = LinearSegmentedColormap.from_list('cv_quality', colors, N=n_bins)
 
     fig1, ax1 = plt.subplots(1, 1, figsize=(7, 6))
 
-    # Plot CV heatmap - 修改vmax为0.3, x轴限制到15000μs
+    # Plot CV heatmap - modified vmax to 0.3, x-axis limited to 15000μs
     im1 = ax1.imshow(tpcv_matrix_filtered, cmap=cmap_cv, aspect='auto',
                      vmin=0.0, vmax=0.3, origin='lower',
                      extent=[sync_times_us_filtered[0], sync_times_us_filtered[-1],
@@ -284,13 +284,13 @@ def generate_f05_interaction_heatmap(data, output_path, params=None):
     plt.close(fig1)
     print(f"Generated panel A: {panel_a_path}")
 
-    # ========== Panel B: Relative Error Heatmap ==========
-    # 统一使用与Panel A相同的蓝色到红色配色
-    cmap_error = cmap_cv  # 使用与TPCV相同的色彩映射
+    # Panel B: Relative Error Heatmap
+    # Unified use of same blue to red colormap as Panel A
+    cmap_error = cmap_cv  # Use same colormap as TPCV
 
     fig2, ax2 = plt.subplots(1, 1, figsize=(7, 6))
 
-    # Plot relative error heatmap - 修改vmax为0.3, x轴限制到15000μs
+    # Plot relative error heatmap - modified vmax to 0.3, x-axis limited to 15000μs
     im2 = ax2.imshow(error_matrix_filtered, cmap=cmap_error, aspect='auto',
                      vmin=0.0, vmax=1.0, origin='lower',
                      extent=[sync_times_us_filtered[0], sync_times_us_filtered[-1],
@@ -328,7 +328,7 @@ def generate_f05_interaction_heatmap(data, output_path, params=None):
     plt.close(fig2)
     print(f"Generated panel B: {panel_b_path}")
 
-    # ========== Combine panels ==========
+    # Combine panels
     combine_figures(
         input_files=[panel_a_path, panel_b_path],
         output_file=output_path,
@@ -408,7 +408,7 @@ def generate_f06_main_effects(data, output_path, params=None):
     if SCIENCEPLOTS_AVAILABLE:
         plt.style.use(['science', 'ieee'])
 
-    # 强制serif字体（IEEE要求，必须在style.use之后设置以覆盖默认）
+    # Force serif font (IEEE requirement, must be set after style.use to override defaults)
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.serif'] = ['Times New Roman', 'DejaVu Serif', 'Liberation Serif']
 
@@ -485,7 +485,7 @@ def generate_f06_main_effects(data, output_path, params=None):
     plt.close(fig2)
     print(f"Generated panel B: {panel_b_path}")
 
-    # ========== Combine panels ==========
+    # Combine panels
     combine_figures(
         input_files=[panel_a_path, panel_b_path],
         output_file=output_path,
@@ -556,7 +556,7 @@ def generate_f07_interaction_plot(data, output_path, params=None):
     if SCIENCEPLOTS_AVAILABLE:
         plt.style.use(['science', 'ieee'])
 
-    # 强制serif字体（IEEE要求，必须在style.use之后设置以覆盖默认）
+    # Force serif font (IEEE requirement, must be set after style.use to override defaults)
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.serif'] = ['Times New Roman', 'DejaVu Serif', 'Liberation Serif']
 
@@ -604,7 +604,7 @@ def generate_f07_interaction_plot(data, output_path, params=None):
 
     ax.set_xlabel(r'Time Synchronization Error ($\mu$s)')
     ax.set_ylabel('TPCV Value')
-    # ax.set_title('Interaction Effect - TPCV vs Sync Error')  # 已注释：去掉图标题
+    # ax.set_title('Interaction Effect - TPCV vs Sync Error')  # Commented: Remove figure title
 
     # Optimize legend: place outside plot area to avoid overlap
     ax.legend(loc='center left', bbox_to_anchor=(1.02, 0.5),
@@ -681,7 +681,7 @@ def generate_f05b_tpcv_vs_error_scatter(data, output_path, params=None):
     if SCIENCEPLOTS_AVAILABLE:
         plt.style.use(['science', 'ieee'])
 
-    # 强制serif字体（IEEE要求，必须在style.use之后设置以覆盖默认）
+    # Force serif font (IEEE requirement, must be set after style.use to override defaults)
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.serif'] = ['Times New Roman', 'DejaVu Serif', 'Liberation Serif']
 
@@ -766,7 +766,7 @@ def generate_f05b_tpcv_vs_error_scatter(data, output_path, params=None):
 
     ax.set_xlabel('TPCV (Two-Path Coefficient of Variation)')
     ax.set_ylabel('Relative Error')
-    # ax.set_title('Main Effect of TPCV on Relative Error')  # 已注释：去掉图标题
+    # ax.set_title('Main Effect of TPCV on Relative Error')  # Commented: Remove figure title
 
     # Simplified legend: only data series
     ax.legend(loc='upper left', frameon=True, fontsize=6,
@@ -851,7 +851,7 @@ def generate_f05c_error_vs_tpcv_scatter(data, output_path, params=None):
     if SCIENCEPLOTS_AVAILABLE:
         plt.style.use(['science', 'ieee'])
 
-    # 强制serif字体（IEEE要求，必须在style.use之后设置以覆盖默认）
+    # Force serif font (IEEE requirement, must be set after style.use to override defaults)
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.serif'] = ['Times New Roman', 'DejaVu Serif', 'Liberation Serif']
 
@@ -967,18 +967,9 @@ def generate_f05c_error_vs_tpcv_scatter(data, output_path, params=None):
         ax.text(xmax * 0.98, 0.20, 'TPCV=0.20', fontsize=5.5,
                color='red', ha='right', va='bottom', alpha=0.9)
 
-        # Statistics box - removed as per user request
-        # text_str = f'n={len(tpcv_data)} | bins={n_bins}\n'
-        # text_str += f'Error: {error_min:.3f}-{error_max:.3f}'
-        # ax.text(0.98, 0.02, text_str,
-        #        transform=ax.transAxes, fontsize=5.5,
-        #        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5, edgecolor='gray', linewidth=0.5),
-        #        verticalalignment='bottom', horizontalalignment='right',
-        #        family='monospace')
-
         return error_at_cv010, error_at_cv020
 
-    # ========== Panel A: Full range ==========
+    # Panel A: Full range
     n_bins_full = 15
     error_centers_full, tpcv_means_full, tpcv_stds_full, error_min_full, error_max_full = \
         compute_bins(error_valid, tpcv_valid, n_bins_full)
@@ -995,7 +986,7 @@ def generate_f05c_error_vs_tpcv_scatter(data, output_path, params=None):
     plt.close(fig1)
     print(f"Generated panel A: {panel_a_path}")
 
-    # ========== Panel B: Zoomed (Error < 2.0) ==========
+    # Panel B: Zoomed (Error < 2.0)
     n_bins_zoom = 10  # Increased to ensure data point near origin
     zoom_mask = error_valid < 2.0
     error_zoom = error_valid[zoom_mask]
@@ -1016,7 +1007,7 @@ def generate_f05c_error_vs_tpcv_scatter(data, output_path, params=None):
     plt.close(fig2)
     print(f"Generated panel B: {panel_b_path}")
 
-    # ========== Combine panels ==========
+    # Combine panels
     combine_figures(
         input_files=[panel_a_path, panel_b_path],
         output_file=output_path,
@@ -1028,7 +1019,7 @@ def generate_f05c_error_vs_tpcv_scatter(data, output_path, params=None):
     )
     print(f"Generated combined figure: {output_path}")
 
-    # ========== Save JSON data ==========
+    # Save JSON data
     json_path = output_path.with_suffix('.json')
     json_data = {
         'metadata': {
@@ -1091,7 +1082,7 @@ def generate_f05c_error_vs_tpcv_scatter_with_cave(data, output_path, params=None
     if SCIENCEPLOTS_AVAILABLE:
         plt.style.use(['science', 'ieee'])
 
-    # 强制serif字体（IEEE要求，必须在style.use之后设置以覆盖默认）
+    # Force serif font (IEEE requirement, must be set after style.use to override defaults)
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.serif'] = ['Times New Roman', 'DejaVu Serif', 'Liberation Serif']
 
@@ -1122,7 +1113,7 @@ def generate_f05c_error_vs_tpcv_scatter_with_cave(data, output_path, params=None
     tpcv_valid = tpcv_all[valid_mask]
     error_valid = error_all[valid_mask]
 
-    # ========== Cave test data calculation ==========
+    # Cave test data calculation
     # Pre-compensation data (3 channels)
     cave_pre_noise = np.array([6.89, 5.22, 5.91])  # ng/√Hz @10Hz
     cave_pre_tpcv = np.array([29.6, 61.0, 26.4])   # %
@@ -1222,7 +1213,7 @@ def generate_f05c_error_vs_tpcv_scatter_with_cave(data, output_path, params=None
 
         return error_bin_centers, tpcv_means, tpcv_stds, error_min, error_max
 
-    # ========== Generate single panel (zoomed view) ==========
+    # Generate single panel (zoomed view)
     # Must match panel B parameters in generate_f05c_error_vs_tpcv_scatter
     n_bins_zoom = 10
     zoom_mask = error_valid < 2.0
@@ -1263,7 +1254,7 @@ def generate_f05c_error_vs_tpcv_scatter_with_cave(data, output_path, params=None
     if error_at_cv020 is not None:
         ax.plot(error_at_cv020, 0.20, 'o', color='red', markersize=6, zorder=10)
 
-    # ========== Plot cave test data points (best configuration: median-median) ==========
+    # Plot cave test data points (best configuration: median-median)
     # Filter for best configuration: TPCV-median, baseline-median
     best_pre = [p for p in cave_data_points if p['state'] == 'pre' and
                 p['tpcv_type'] == 'median' and p['baseline_type'] == 'min'][0]
@@ -1300,21 +1291,12 @@ def generate_f05c_error_vs_tpcv_scatter_with_cave(data, output_path, params=None
     ax.legend(loc='upper left', frameon=True, fontsize=7, framealpha=0.9,
               handlelength=1.5, handletextpad=0.5, labelspacing=1.0, borderpad=0.8)
 
-    # Statistics box - removed to match panel B style
-    # text_str = f'Simulation: n={len(tpcv_zoom)} | bins={n_bins_zoom}\n'
-    # text_str += f'Error range: {error_min_zoom:.3f}-{error_max_zoom:.3f}'
-    # ax.text(0.98, 0.02, text_str,
-    #        transform=ax.transAxes, fontsize=6,
-    #        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5, edgecolor='gray', linewidth=0.5),
-    #        verticalalignment='bottom', horizontalalignment='right',
-    #        family='monospace')
-
     # Save figure
     plt.savefig(output_path, format='png', dpi=600, bbox_inches='tight')
     plt.close(fig)
     print(f"Generated figure with cave data: {output_path}")
 
-    # ========== Analyze best configuration ==========
+    # Analyze best configuration
     # Find which configuration is closest to simulation curve
     analysis_results = []
     for pt in cave_data_points:
@@ -1368,7 +1350,7 @@ def generate_f05c_error_vs_tpcv_scatter_with_cave(data, output_path, params=None
     print(f"  Distance: {best_post['distance']:.4f}")
     print("="*60)
 
-    # ========== Save JSON data ==========
+    # Save JSON data
     json_path = output_path.with_suffix('.json')
     json_data = {
         'metadata': {
@@ -1502,3 +1484,6 @@ def main():
     print(f"  - 5 PNG figures (600 DPI)")
     print(f"  - 5 JSON data files (with experimental parameters and plot data)")
 
+
+if __name__ == '__main__':
+    main()

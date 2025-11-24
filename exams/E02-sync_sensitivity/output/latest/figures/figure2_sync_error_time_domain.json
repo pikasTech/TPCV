@@ -5,7 +5,7 @@
     "figure_type": "Time Domain Comparison (V2 - Individual Panels)",
     "description": "Time domain analysis showing channel overlay, relative delay, and cross-correlation for ideal vs max delay synchronization. Generated as 6 individual panels then combined.",
     "generation_method": "V2 - Individual panels + combine_figures",
-    "generation_timestamp": "2025-11-23T17:07:07.294536"
+    "generation_timestamp": "2025-11-24T16:24:02.848724"
   },
   "experiment_parameters": {
     "sampling_rate_hz": 2000,
@@ -20,12 +20,12 @@
   "plot_data": {
     "subplot_layout": "3x2",
     "individual_panels": [
-      "D:\\Work\\noise_paper\\code_release\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_a.png",
-      "D:\\Work\\noise_paper\\code_release\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_b.png",
-      "D:\\Work\\noise_paper\\code_release\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_c.png",
-      "D:\\Work\\noise_paper\\code_release\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_d.png",
-      "D:\\Work\\noise_paper\\code_release\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_e.png",
-      "D:\\Work\\noise_paper\\code_release\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_f.png"
+      "D:\\Work\\TPCV\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_a.png",
+      "D:\\Work\\TPCV\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_b.png",
+      "D:\\Work\\TPCV\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_c.png",
+      "D:\\Work\\TPCV\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_d.png",
+      "D:\\Work\\TPCV\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_e.png",
+      "D:\\Work\\TPCV\\exams\\E02-sync_sensitivity\\output\\latest\\figures\\individual\\figure2_f.png"
     ],
     "row1_overlay": {
       "description": "Three-channel overlay comparison",

@@ -21,14 +21,14 @@ class E02SpecializedVisualizer:
         Initialize E02 specialized visualizer
 
         Args:
-            base_dir: Project base directory (默认自动检测)
+            base_dir: Project base directory (auto-detect by default)
         """
         if base_dir is None:
-            # 自动检测当前文件所在的base_dir
+            # Auto-detect base_dir from current file location
             current_file = Path(__file__).resolve()
-            # 当前文件在code/目录下,向上两级是base_dir
+            # Current file is in code/ directory, go up two levels to base_dir
             base_dir = current_file.parent.parent
-        
+
         self.base_dir = Path(base_dir)
         self.exams_dir = self.base_dir / "exams"
         self.setup_matplotlib_style()
@@ -77,25 +77,25 @@ class E02SpecializedVisualizer:
             print("Warning: scienceplots not installed. Using fallback style.")
             print("Install with: pip install scienceplots")
 
-        # 强制serif字体（IEEE要求，必须在style.use之后设置以覆盖默认）
+        # Force serif font (IEEE requirement, must be set after style.use to override defaults)
         matplotlib.rcParams['font.family'] = 'serif'
         matplotlib.rcParams['font.serif'] = ['Times New Roman', 'DejaVu Serif', 'Liberation Serif']
 
-        # 中文字体配置（覆盖IEEE默认设置）
+        # Chinese font configuration (override IEEE default settings)
         import matplotlib.font_manager as fm
         if hasattr(fm, '_fmcache'):
             fm._fmcache.clear()
 
-        # 设置中文字体（SimHei黑体）用于支持中文显示
+        # Set Chinese font (SimHei) for Chinese character display support
         matplotlib.rcParams['font.sans-serif'] = [
-            'SimHei',           # 优先使用黑体（中文）
+            'SimHei',           # Prefer SimHei (Chinese)
             'DejaVu Sans',
             'Arial',
             'Helvetica'
         ]
-        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        matplotlib.rcParams['axes.unicode_minus'] = False  # Fix minus sign display
 
-        # IEEE风格的字体大小配置
+        # IEEE style font size configuration
         matplotlib.rcParams['font.size'] = 8
         matplotlib.rcParams['axes.labelsize'] = 9
         matplotlib.rcParams['axes.titlesize'] = 10
@@ -104,13 +104,13 @@ class E02SpecializedVisualizer:
         matplotlib.rcParams['legend.fontsize'] = 7
         matplotlib.rcParams['figure.titlesize'] = 11
 
-        # 其他IEEE风格配置
+        # Other IEEE style configuration
         matplotlib.rcParams['figure.dpi'] = 100
         matplotlib.rcParams['savefig.dpi'] = 300
 
-        # LaTeX渲染配置（使用matplotlib内置LaTeX，不依赖系统TeX）
-        matplotlib.rcParams['text.usetex'] = False  # 使用matplotlib内置LaTeX
-        matplotlib.rcParams['mathtext.fontset'] = 'cm'  # Computer Modern字体
+        # LaTeX rendering configuration (use matplotlib built-in LaTeX, no system TeX dependency)
+        matplotlib.rcParams['text.usetex'] = False  # Use matplotlib built-in LaTeX
+        matplotlib.rcParams['mathtext.fontset'] = 'cm'  # Computer Modern font
         matplotlib.rcParams['mathtext.default'] = 'regular'
 
     def load_experiment_results(self, experiment_name):
@@ -192,7 +192,7 @@ class E02SpecializedVisualizer:
         }
 
         data = {}
-        for exp_name, delay_us_pm in experiments.items():  # 改名：delay_us → delay_us_pm (±)
+        for exp_name, delay_us_pm in experiments.items():  # Renamed: delay_us → delay_us_pm (±)
             try:
                 results = self.load_experiment_results(exp_name)
                 tpcv = self.calculate_tpcv(results)
@@ -220,9 +220,9 @@ class E02SpecializedVisualizer:
         delays = sorted(data.keys())
         tpcvs = [data[d]['tpcv'] for d in delays]
 
-        # 应用IEEE风格
+        # Apply IEEE style
         with plt.style.context(['science', 'ieee']):
-            # Create figure (使用与figure3相同的figsize)
+            # Create figure (use same figsize as figure3)
             fig, ax = plt.subplots(figsize=(6, 4))
 
             # Plot TPCV vs sync error
@@ -233,10 +233,10 @@ class E02SpecializedVisualizer:
             ax.axhline(y=0.20, color='red', linestyle='--', linewidth=1.2,
                        label='TPCV=0.20 threshold')
 
-            # Configure axes (使用IEEE风格的标签)
+            # Configure axes (use IEEE style labels)
             ax.set_xlabel(r'Time Synchronization Error ($\mu$s)')
             ax.set_ylabel('Two-Path Coefficient of Variation (TPCV)')
-            # ax.set_title('TPCV vs Time Synchronization Error')  # 已注释：去掉图标题
+            # ax.set_title('TPCV vs Time Synchronization Error')  # Commented: Remove figure title
 
             # Use logarithmic scale for x-axis if there's a wide range (and no zero values)
             if min(delays) > 0 and max(delays) / min(delays) > 10:
@@ -249,7 +249,7 @@ class E02SpecializedVisualizer:
             # Grid
             ax.grid(True, alpha=0.3)
 
-            # Legend - 放置在图内部
+            # Legend - place inside the figure
             ax.legend(loc='best', framealpha=0.8, edgecolor='gray', fontsize=8)
 
             # Tight layout
@@ -311,10 +311,10 @@ class E02SpecializedVisualizer:
     def generate_f01a_time_domain_comparison(self, output_dir):
         """
         Generate F01a: Time Domain Comparison figure (3x2 layout)
-        
-        V2方式：先生成6个独立子图，然后用combine_figures拼接
-        
-        使用真实的时域波形数据生成对比图
+
+        V2 approach: First generate 6 individual subplots, then combine using combine_figures
+
+        Uses real time-domain waveform data to generate comparison plots
 
         Args:
             output_dir: Directory to save the figure
@@ -328,24 +328,24 @@ class E02SpecializedVisualizer:
         ideal_data = data[0]['results']  # E02-sync_sensitivity
         max_delay_data = data[5000]['results']  # E02-sync_level4_v2 (±5ms, span=10ms)
 
-        # 尝试加载波形数据
+        # Try to load waveform data
         ideal_waveform = ideal_data.get('waveform_data')
         max_delay_waveform = max_delay_data.get('waveform_data')
 
         if ideal_waveform is None or max_delay_waveform is None:
-            print("WARNING: 缺少波形数据，无法生成真实时域图")
-            print("请运行: python cli.py run --exam E02-sync_sensitivity")
-            print("       python cli.py run --exam E02-sync_level4_v2")
+            print("WARNING: Missing waveform data, cannot generate real time-domain plots")
+            print("Please run: python cli.py run --exam E02-sync_sensitivity")
+            print("            python cli.py run --exam E02-sync_level4_v2")
             raise ValueError("Missing waveform data for E02 experiments")
 
-        # 有波形数据，生成真实的时域图 - V2方式：生成独立子图
-        print("检测到波形数据，生成真实时域对比图（V2方式：独立子图）...")
+        # Have waveform data, generate real time-domain plots - V2 approach: generate individual subplots
+        print("Detected waveform data, generating real time-domain comparison plots (V2 approach: individual subplots)...")
 
-        # 创建individual目录保存单个子图
+        # Create individual directory to save individual subplots
         individual_dir = Path(output_dir) / "individual"
         individual_dir.mkdir(parents=True, exist_ok=True)
 
-        # 提取波形数据
+        # Extract waveform data
         ideal_ch1 = np.array(ideal_waveform['channel_1'])
         ideal_ch2 = np.array(ideal_waveform['channel_2'])
         ideal_ch3 = np.array(ideal_waveform['channel_3'])
@@ -356,16 +356,16 @@ class E02SpecializedVisualizer:
         max_delay_ch3 = np.array(max_delay_waveform['channel_3'])
         max_delay_time = np.array(max_delay_waveform['time'])
 
-        # 只显示前0.1秒（根据实验计划）
-        display_duration = 0.1  # 秒
+        # Display only first 0.1 seconds (according to experiment plan)
+        display_duration = 0.1  # seconds
         fs = ideal_waveform['sampling_rate']
         display_samples = int(display_duration * fs)
 
-        # 应用IEEE风格
+        # Apply IEEE style
         with plt.style.context(['science', 'ieee']):
             panel_files = []
-            
-            # ========== 子图 a: Ideal Sync - Channel Overlay ==========
+
+            # Panel a: Ideal Sync - Channel Overlay
             fig_a, ax_a = plt.subplots(figsize=(6, 4))
             ax_a.plot(ideal_time[:display_samples], ideal_ch1[:display_samples],
                       label='Ch1', alpha=0.7, linewidth=1.2)
@@ -384,7 +384,7 @@ class E02SpecializedVisualizer:
             panel_files.append(file_a)
             print(f"  Generated panel a: {file_a.name}")
 
-            # ========== 子图 b: Max Delay - Channel Overlay ==========
+            # Panel b: Max Delay - Channel Overlay
             fig_b, ax_b = plt.subplots(figsize=(6, 4))
             ax_b.plot(max_delay_time[:display_samples], max_delay_ch1[:display_samples],
                       label='Ch1', alpha=0.7, linewidth=1.2)
@@ -403,7 +403,7 @@ class E02SpecializedVisualizer:
             panel_files.append(file_b)
             print(f"  Generated panel b: {file_b.name}")
 
-            # ========== 子图 c: Ideal Sync - Relative Delay ==========
+            # Panel c: Ideal Sync - Relative Delay
             fig_c, ax_c = plt.subplots(figsize=(6, 4))
             ax_c.plot(ideal_time[:display_samples],
                       ideal_ch2[:display_samples] - ideal_ch1[:display_samples],
@@ -422,7 +422,7 @@ class E02SpecializedVisualizer:
             panel_files.append(file_c)
             print(f"  Generated panel c: {file_c.name}")
 
-            # ========== 子图 d: Max Delay - Relative Delay ==========
+            # Panel d: Max Delay - Relative Delay
             fig_d, ax_d = plt.subplots(figsize=(6, 4))
             ax_d.plot(max_delay_time[:display_samples],
                       max_delay_ch2[:display_samples] - max_delay_ch1[:display_samples],
@@ -441,9 +441,9 @@ class E02SpecializedVisualizer:
             panel_files.append(file_d)
             print(f"  Generated panel d: {file_d.name}")
 
-            # ========== 子图 e: Ideal Sync - Cross-correlation ==========
+            # Panel e: Ideal Sync - Cross-correlation
             from scipy.signal import correlate
-            
+
             corr_ideal_12 = correlate(ideal_ch1[:display_samples], ideal_ch2[:display_samples], mode='same')
             corr_ideal_13 = correlate(ideal_ch1[:display_samples], ideal_ch3[:display_samples], mode='same')
             lag_axis = (np.arange(len(corr_ideal_12)) - len(corr_ideal_12)//2) / fs * 1000  # ms
@@ -455,7 +455,7 @@ class E02SpecializedVisualizer:
             ax_e.set_ylabel(r'Cross-correlation')
             ax_e.legend(loc='best', framealpha=0.8, edgecolor='gray', fontsize=8)
             ax_e.grid(True, alpha=0.3)
-            ax_e.set_xlim([-20, 20])  # 只显示±20ms
+            ax_e.set_xlim([-20, 20])  # Display only ±20ms
             plt.tight_layout()
             file_e = individual_dir / "figure2_e.png"
             fig_e.savefig(file_e, format='png', dpi=300, bbox_inches='tight')
@@ -463,7 +463,7 @@ class E02SpecializedVisualizer:
             panel_files.append(file_e)
             print(f"  Generated panel e: {file_e.name}")
 
-            # ========== 子图 f: Max Delay - Cross-correlation ==========
+            # Panel f: Max Delay - Cross-correlation
             corr_max_12 = correlate(max_delay_ch1[:display_samples], max_delay_ch2[:display_samples], mode='same')
             corr_max_13 = correlate(max_delay_ch1[:display_samples], max_delay_ch3[:display_samples], mode='same')
 
@@ -474,7 +474,7 @@ class E02SpecializedVisualizer:
             ax_f.set_ylabel(r'Cross-correlation')
             ax_f.legend(loc='best', framealpha=0.8, edgecolor='gray', fontsize=8)
             ax_f.grid(True, alpha=0.3)
-            ax_f.set_xlim([-20, 20])  # 只显示±20ms
+            ax_f.set_xlim([-20, 20])  # Display only ±20ms
             plt.tight_layout()
             file_f = individual_dir / "figure2_f.png"
             fig_f.savefig(file_f, format='png', dpi=300, bbox_inches='tight')
@@ -482,9 +482,9 @@ class E02SpecializedVisualizer:
             panel_files.append(file_f)
             print(f"  Generated panel f: {file_f.name}")
 
-        # ========== 使用combine_figures拼接 ==========
+        # Use combine_figures for combination
         from combine_figures import combine_figures
-        
+
         output_path = Path(output_dir) / "figure2_sync_error_time_domain.png"
         combine_figures(
             input_files=panel_files,
@@ -496,8 +496,8 @@ class E02SpecializedVisualizer:
             label_fontweight='bold',
             dpi=300
         )
-        
-        print(f"Generated F01a (V2拼接): {output_path}")
+
+        print(f"Generated F01a (V2 combination): {output_path}")
 
         # Save JSON data (real waveform version)
         json_data = {
@@ -601,7 +601,3 @@ def main():
     print("\n=== Summary ===")
     for fig_name, fig_path in results.items():
         print(f"{fig_name}: {fig_path}")
-
-
-# __main__ block removed to comply with project structure
-# All functionality accessed via cli.py

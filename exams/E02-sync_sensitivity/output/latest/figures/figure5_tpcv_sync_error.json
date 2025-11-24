@@ -5,7 +5,7 @@
     "figure_type": "TPCV vs Time Synchronization Error",
     "description": "Two-Path Coefficient of Variation vs Time Synchronization Error across 5 delay levels (±representation)",
     "representation_note": "R16 (2025-11-21): Changed from span to ±notation for academic convention",
-    "generation_timestamp": "2025-11-23T17:07:07.728088"
+    "generation_timestamp": "2025-11-24T16:24:03.346301"
   },
   "experiment_parameters": {
     "sampling_rate_hz": 2000,

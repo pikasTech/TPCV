@@ -1,19 +1,38 @@
-# Three-Channel Correlation Algorithm - Figure Generation Code
+# Three-Channel Correlation Algorithm - Code and Data
 
-This repository contains the code and data for generating figures in the paper:
+This repository contains the code and data for the paper:
 **"Two-Path Coefficient of Variation: A Novel Quality Criterion for Three-Channel Self-Noise Estimation"**
 
 ## Quick Start
+
+### Generate Figures (Recommended)
 
 ```bash
 # Install dependencies
 pip install -r requirements.txt
 
-# Generate all figures
+# Generate all figures from existing data
 python gen_fig.py
 ```
 
 Output figures will be saved in `output/{timestamp}/` directory.
+
+### Regenerate Experimental Data (Optional)
+
+If you want to regenerate the experimental data from scratch:
+
+```bash
+# Generate all experiments
+python gen_data.py
+
+# Generate specific experiment
+python gen_data.py --exam E01-algorithm_verification
+
+# List available experiments
+python gen_data.py --list
+```
+
+**Note**: Data generation can take time (E04: ~10-15 minutes for 100 condition combinations).
 
 ## Generated Figures
 
@@ -33,23 +52,31 @@ Output figures will be saved in `output/{timestamp}/` directory.
 ```
 code_release/
 ├── README.md                  # This file
-├── gen_fig.py                 # Main entry: generate all figures
+├── gen_fig.py                 # Entry point: generate figures
+├── gen_data.py                # Entry point: generate experimental data
+├── verify_all_data.py         # Data verification utility
 ├── requirements.txt           # Python dependencies
 │
 ├── code/                      # Core algorithms and visualization
 │   ├── core_algorithm.py      # Three-channel correlation algorithm
+│   ├── common_sync_algorithm.py  # Synchronization utilities
+│   ├── single_experiment.py   # Single experiment runner
+│   ├── noise_gradient_analysis.py  # Gradient analysis (E04)
+│   ├── experiment_runner.py   # Experiment dispatcher
 │   ├── combine_figures.py     # Figure combination utility
-│   ├── e01_specialized_visualizer_v2.py  # E01 figure generator
-│   ├── e02_specialized_visualizer.py     # E02 figure generator
-│   ├── e04_specialized_visualizer.py     # E04 figure generator
+│   ├── e01_specialized_visualizer_v2.py  # E01 visualizer
+│   ├── e02_specialized_visualizer.py     # E02 visualizer
+│   ├── e04_specialized_visualizer.py     # E04 visualizer
 │   └── plot_figure1b.py       # Figure 1b generator
 │
 ├── exams/                     # Experiment configurations and data
-│   ├── baseline/config.json
+│   ├── baseline/
 │   ├── E01-algorithm_verification/
 │   ├── E02-sync_sensitivity/
 │   ├── E02-sync_level{1,2,3,4}_v2/
 │   └── E04-combined_effects/
+│       ├── config.json
+│       └── output/latest/results.json
 │
 └── output/                    # Generated figures (auto-created)
 ```

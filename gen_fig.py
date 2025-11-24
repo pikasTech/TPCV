@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
 """
-论文图表生成入口 - Code Release版本
-=====================================
+Paper Figure Generation Entry Point - Code Release Version
+===========================================================
 
-用途：一键生成论文所需的所有图表
+Purpose: One-click generation of all figures for the paper
 
-生成的图表（对应main.tex引用）：
-1. E01_figure0_time_domain.png - 时域波形图
-2. E01_figure1b_frequency_processing.png - 频域处理图
-3. figure3_sync_error_time_domain.png - 同步误差时域图
-4. figure4_tpcv_sync_error.png - TPCV与同步误差图
-5. figure7_tpcv_interaction_heatmap.png - TPCV交互热图
-6. figure8_main_effects.png - 主效应图
-7. figure11c_error_vs_tpcv_scatter.png - 误差 vs TPCV散点图
-8. figure11c_error_vs_tpcv_scatter_with_cave.png - 误差 vs TPCV散点图（含山洞数据）
+Generated figures (referenced in main.tex):
+1. E01_figure0_time_domain.png - Time domain waveform plot
+2. E01_figure1b_frequency_processing.png - Frequency domain processing plot
+3. figure3_sync_error_time_domain.png - Synchronization error time domain plot
+4. figure4_tpcv_sync_error.png - TPCV vs synchronization error plot
+5. figure7_tpcv_interaction_heatmap.png - TPCV interaction heatmap
+6. figure8_main_effects.png - Main effects plot
+7. figure11c_error_vs_tpcv_scatter.png - Error vs TPCV scatter plot
+8. figure11c_error_vs_tpcv_scatter_with_cave.png - Error vs TPCV scatter plot (with cave data)
 
-使用方法：
+Usage:
     python gen_fig.py
 
-输出目录：output/{timestamp}/
+Output directory: output/{timestamp}/
 """
 
 import sys
@@ -29,25 +29,25 @@ from datetime import datetime
 
 
 class FigureGenerator:
-    """论文图表生成器"""
+    """Paper figure generator"""
 
     def __init__(self):
-        """初始化"""
+        """Initialize generator"""
         self.project_root = Path(__file__).parent
         self.code_dir = self.project_root / "code"
         self.exams_dir = self.project_root / "exams"
 
-        # 创建带时间戳的输出目录
+        # Create output directory with timestamp
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.output_dir = self.project_root / "output" / timestamp
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
-        print(f"输出目录: {self.output_dir}")
+        print(f"Output directory: {self.output_dir}")
 
     def run_python_code(self, code, description="", cwd=None):
-        """运行Python代码片段"""
+        """Execute Python code snippet"""
         print(f"\n{'='*60}")
-        print(f"执行: {description}")
+        print(f"Executing: {description}")
         print(f"{'='*60}")
 
         if cwd is None:
@@ -68,46 +68,46 @@ class FigureGenerator:
                 print(result.stdout)
 
             if result.returncode != 0:
-                print(f"警告: 返回非零退出码 {result.returncode}")
+                print(f"Warning: Non-zero exit code {result.returncode}")
                 if result.stderr:
-                    print(f"错误信息:\n{result.stderr}")
+                    print(f"Error message:\n{result.stderr}")
                 return False
 
             return True
 
         except subprocess.TimeoutExpired:
-            print(f"错误: 执行超时（>300秒）")
+            print(f"Error: Execution timeout (>300 seconds)")
             return False
         except Exception as e:
-            print(f"错误: {e}")
+            print(f"Error: {e}")
             return False
 
     def copy_and_rename(self, source, dest_name, description=""):
-        """复制并重命名图片到输出目录"""
+        """Copy and rename figure to output directory"""
         if isinstance(source, str):
             source = Path(source)
 
         if not source.exists():
-            print(f"[WARN] 源文件不存在: {source}")
+            print(f"[WARN] Source file does not exist: {source}")
             return False
 
         dest = self.output_dir / dest_name
         shutil.copy2(source, dest)
-        print(f"[OK] 已复制: {dest_name} - {description}")
+        print(f"[OK] Copied: {dest_name} - {description}")
 
-        # 同时复制JSON文件
+        # Also copy JSON file if exists
         json_source = source.with_suffix('.json')
         if json_source.exists():
             json_dest = self.output_dir / Path(dest_name).with_suffix('.json').name
             shutil.copy2(json_source, json_dest)
-            print(f"[OK] 已复制JSON: {json_dest.name}")
+            print(f"[OK] Copied JSON: {json_dest.name}")
 
         return True
 
     def generate_e01_figures(self):
-        """生成E01实验图表"""
+        """Generate E01 experiment figures"""
         print("\n" + "="*60)
-        print("步骤1: 生成E01算法验证图表")
+        print("Step 1: Generate E01 algorithm verification figures")
         print("="*60)
 
         code_dir_str = str(self.code_dir).replace('\\', '/')
@@ -119,9 +119,9 @@ from e01_specialized_visualizer_v2 import E01SpecializedVisualizerV2
 
 viz = E01SpecializedVisualizerV2(exam_name="E01-algorithm_verification", base_dir='{project_root_str}')
 files = viz.generate_all_figures()
-print(f"\\n[SUCCESS] E01图表已生成: {{files}}")
+print(f"\\n[SUCCESS] E01 figures generated: {{files}}")
 """
-        success = self.run_python_code(code, "E01算法验证可视化", cwd=self.project_root)
+        success = self.run_python_code(code, "E01 algorithm verification visualization", cwd=self.project_root)
 
         if success:
             exam_dir = self.exams_dir / "E01-algorithm_verification"
@@ -133,12 +133,12 @@ print(f"\\n[SUCCESS] E01图表已生成: {{files}}")
 
                 src0 = figures_dir / "figure0_time_domain_waveforms.png"
                 if src0.exists():
-                    self.copy_and_rename(src0, "E01_figure0_time_domain.png", "时域波形图")
+                    self.copy_and_rename(src0, "E01_figure0_time_domain.png", "Time domain waveform plot")
 
     def generate_e01_figure1b(self):
-        """生成E01_figure1b频域处理图"""
+        """Generate E01 figure1b frequency domain processing plot"""
         print("\n" + "="*60)
-        print("步骤2: 生成E01_figure1b频域处理图")
+        print("Step 2: Generate E01 figure1b frequency domain processing plot")
         print("="*60)
 
         code_dir_str = str(self.code_dir).replace('\\', '/')
@@ -148,11 +148,11 @@ print(f"\\n[SUCCESS] E01图表已生成: {{files}}")
 import sys
 sys.path.insert(0, '{code_dir_str}')
 
-# 修改plot_figure1b中的配置路径
+# Modify configuration path in plot_figure1b
 import plot_figure1b
 from pathlib import Path
 
-# 覆盖配置加载函数
+# Override configuration loading function
 original_load = plot_figure1b.load_baseline_config
 def patched_load():
     config_path = Path('{config_path_str}')
@@ -161,20 +161,20 @@ def patched_load():
         return json.load(f)
 plot_figure1b.load_baseline_config = patched_load
 
-# 生成图表
+# Generate figure
 output_dir = Path('{output_dir_str}')
 output_basename = "E01_figure1b_frequency_processing"
-# 使用sys.argv传递参数
+# Pass parameters via sys.argv
 sys.argv = ['plot_figure1b.py', '--output-dir', str(output_dir), '--output-basename', output_basename]
 plot_figure1b.main()
-print("[SUCCESS] figure1b已生成")
+print("[SUCCESS] figure1b generated")
 """
-        self.run_python_code(code, "三通道频域处理示意图", cwd=self.project_root)
+        self.run_python_code(code, "Three-channel frequency domain processing diagram", cwd=self.project_root)
 
     def generate_e02_figures(self):
-        """生成E02同步误差图表"""
+        """Generate E02 synchronization error figures"""
         print("\n" + "="*60)
-        print("步骤3: 生成E02同步误差图表")
+        print("Step 3: Generate E02 synchronization error figures")
         print("="*60)
 
         code_dir_str = str(self.code_dir).replace('\\', '/')
@@ -188,13 +188,13 @@ viz = E02SpecializedVisualizer(base_dir='{project_root_str}')
 
 try:
     results = viz.generate_all_figures()
-    print(f"\\n[SUCCESS] E02图表已生成")
+    print(f"\\n[SUCCESS] E02 figures generated")
 except Exception as e:
-    print(f"[ERROR] E02图表生成失败: {{e}}")
+    print(f"[ERROR] E02 figure generation failed: {{e}}")
     import traceback
     traceback.print_exc()
 """
-        success = self.run_python_code(code, "E02同步误差可视化", cwd=self.project_root)
+        success = self.run_python_code(code, "E02 synchronization error visualization", cwd=self.project_root)
 
         if success:
             exam_dir = self.exams_dir / "E02-sync_sensitivity"
@@ -207,35 +207,35 @@ except Exception as e:
 
                     src_fig2 = figures_dir / "figure2_sync_error_time_domain.png"
                     if src_fig2.exists():
-                        self.copy_and_rename(src_fig2, "figure3_sync_error_time_domain.png", "时域同步误差对比图")
+                        self.copy_and_rename(src_fig2, "figure3_sync_error_time_domain.png", "Time domain sync error comparison plot")
 
                     src_fig5 = figures_dir / "figure5_tpcv_sync_error.png"
                     if src_fig5.exists():
-                        self.copy_and_rename(src_fig5, "figure4_tpcv_sync_error.png", "TPCV与同步误差关系图")
+                        self.copy_and_rename(src_fig5, "figure4_tpcv_sync_error.png", "TPCV vs synchronization error plot")
 
     def generate_e04_figures(self):
-        """生成E04综合效应图表"""
+        """Generate E04 combined effects figures"""
         print("\n" + "="*60)
-        print("步骤4: 生成E04综合效应图表")
+        print("Step 4: Generate E04 combined effects figures")
         print("="*60)
 
         exam_dir = self.exams_dir / "E04-combined_effects"
         output_dir = exam_dir / "output"
 
         if not output_dir.exists():
-            print("[ERROR] E04实验未运行，无output目录")
+            print("[ERROR] E04 experiment not run, no output directory")
             return
 
         timestamps = sorted([d.name for d in output_dir.iterdir() if d.is_dir()])
         if not timestamps:
-            print("[ERROR] E04实验无输出数据")
+            print("[ERROR] E04 experiment has no output data")
             return
 
         latest = timestamps[-1]
         results_json = output_dir / latest / "results.json"
 
         if not results_json.exists():
-            print(f"[ERROR] results.json不存在: {results_json}")
+            print(f"[ERROR] results.json does not exist: {results_json}")
             return
 
         code_dir_str = str(self.code_dir).replace('\\', '/')
@@ -266,15 +266,15 @@ generate_f06_main_effects(data, output_dir / 'figure12_main_effects.png', params
 
 print("=== All E04 figures generated ===")
 """
-        success = self.run_python_code(code, "E04综合效应可视化", cwd=self.project_root)
+        success = self.run_python_code(code, "E04 combined effects visualization", cwd=self.project_root)
 
         if success:
             figures_dir = output_dir / latest / "figures"
             figure_mapping = {
-                "figure11_tpcv_interaction_heatmap.png": ("figure7_tpcv_interaction_heatmap.png", "TPCV交互效应热图"),
-                "figure12_main_effects.png": ("figure8_main_effects.png", "主效应分析图"),
-                "figure11c_error_vs_tpcv_scatter.png": ("figure11c_error_vs_tpcv_scatter.png", "相对误差 vs TPCV散点图"),
-                "figure11c_error_vs_tpcv_scatter_with_cave.png": ("figure11c_error_vs_tpcv_scatter_with_cave.png", "相对误差 vs TPCV散点图（含山洞测试）")
+                "figure11_tpcv_interaction_heatmap.png": ("figure7_tpcv_interaction_heatmap.png", "TPCV interaction effect heatmap"),
+                "figure12_main_effects.png": ("figure8_main_effects.png", "Main effects analysis plot"),
+                "figure11c_error_vs_tpcv_scatter.png": ("figure11c_error_vs_tpcv_scatter.png", "Relative error vs TPCV scatter plot"),
+                "figure11c_error_vs_tpcv_scatter_with_cave.png": ("figure11c_error_vs_tpcv_scatter_with_cave.png", "Relative error vs TPCV scatter plot (with cave test)")
             }
 
             for src_name, (dest_name, description) in figure_mapping.items():
@@ -282,15 +282,15 @@ print("=== All E04 figures generated ===")
                 if src_file.exists():
                     self.copy_and_rename(src_file, dest_name, description)
                 else:
-                    print(f"[WARN] {src_name} 不存在")
+                    print(f"[WARN] {src_name} does not exist")
 
     def run(self):
-        """执行完整的图表生成流程"""
+        """Execute complete figure generation workflow"""
         print("\n" + "="*70)
-        print(" "*15 + "论文图表生成器 (Code Release)")
+        print(" "*15 + "Paper Figure Generator (Code Release)")
         print("="*70)
-        print(f"项目目录: {self.project_root}")
-        print(f"输出目录: {self.output_dir}")
+        print(f"Project directory: {self.project_root}")
+        print(f"Output directory: {self.output_dir}")
 
         try:
             self.generate_e01_figures()
@@ -301,17 +301,17 @@ print("=== All E04 figures generated ===")
             generated_files = list(self.output_dir.glob("*.png"))
 
             print("\n" + "="*70)
-            print(" "*25 + "生成完成！")
+            print(" "*25 + "Generation Complete!")
             print("="*70)
-            print(f"共生成 {len(generated_files)} 个图表文件")
-            print(f"输出目录: {self.output_dir}")
-            print("\n生成的图表:")
+            print(f"Generated {len(generated_files)} figure files")
+            print(f"Output directory: {self.output_dir}")
+            print("\nGenerated figures:")
             for i, fig in enumerate(sorted(generated_files), 1):
                 print(f"  {i:2d}. {fig.name}")
             print("="*70)
 
         except Exception as e:
-            print(f"\n[ERROR] 生成过程中出现错误: {e}")
+            print(f"\n[ERROR] Error during generation: {e}")
             import traceback
             traceback.print_exc()
 

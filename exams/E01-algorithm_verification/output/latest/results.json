@@ -2,8 +2,8 @@
   "metadata": {
     "experiment_type": "single_three_channel_experiment",
     "experiment_id": "E01-algorithm_verification",
-    "timestamp": "20251117_120936",
-    "timestamp_iso": "2025-11-17T12:09:36.104636",
+    "timestamp": "20251124_101609",
+    "timestamp_iso": "2025-11-24T10:16:09.405186",
     "config_file": "exams\\E01-algorithm_verification\\config.json",
     "noise_amplitude_ng_sqrthz": 10,
     "signal_amplitude_ng_sqrthz": 20,

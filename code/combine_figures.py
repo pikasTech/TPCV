@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
 """
-统一的图片拼接工具 V2 - 外部标签版本
-==========================================
+Unified Figure Combination Tool V2 - External Label Version
+==========================================================
 
-功能：
-1. 将多个单独的图片拼接成一个复合图
-2. 在每个子图的**外部底部**添加 (a), (b), (c) 等标注（不遮挡原图）
-3. 子图之间有足够间隙，避免标签重叠
-4. 不添加图题（论文的图题在图的下方）
+Features:
+1. Combine multiple individual figures into a composite figure
+2. Add (a), (b), (c) labels **outside bottom** of each subfigure (no occlusion)
+3. Sufficient spacing between subfigures to avoid label overlap
+4. No figure title added (paper figure titles go below the figure)
 
-使用方法：
----------
+Usage:
+------
 from combine_figures_v2 import combine_figures
 
-# 方法1：指定图片列表和布局
+# Method 1: Specify file list and layout
 combine_figures(
     input_files=['fig_A.png', 'fig_B.png', 'fig_C.png'],
     output_file='combined.png',
-    layout=(1, 3),  # 1行3列
+    layout=(1, 3),  # 1 row, 3 columns
     labels=['a', 'b', 'c']
 )
 """
@@ -33,11 +33,11 @@ import scienceplots
 
 
 def setup_matplotlib_style():
-    """设置matplotlib样式（IEEE风格）"""
+    """Set matplotlib style (IEEE format)"""
     # Apply scienceplots IEEE style
     plt.style.use(['science', 'ieee'])
 
-    # 强制serif字体（IEEE要求，Times New Roman）
+    # Force serif font (IEEE requirement, Times New Roman)
     matplotlib.rcParams['font.family'] = 'serif'
     matplotlib.rcParams['font.serif'] = ['Times New Roman', 'DejaVu Serif', 'Liberation Serif']
 
@@ -64,50 +64,50 @@ def combine_figures(
     dpi: int = 300
 ) -> Path:
     """
-    将多个单独的图片拼接成一个复合图，标签放在子图外部底部
+    Combine multiple individual figures into a composite figure with labels outside bottom
 
     Parameters
     ----------
     input_files : List[Union[str, Path]]
-        输入图片文件列表
+        List of input figure files
     output_file : Union[str, Path]
-        输出文件路径
+        Output file path
     layout : Optional[Tuple[int, int]], optional
-        布局 (行数, 列数)，如果为None则自动计算，默认为None
+        Layout (rows, columns), auto-calculated if None, default is None
     labels : Optional[List[str]], optional
-        标注列表，如果为None则自动生成 ['a', 'b', 'c', ...]，默认为None
+        Label list, auto-generated as ['a', 'b', 'c', ...] if None, default is None
     label_position : str, optional
-        标注位置（保留参数，当前仅支持bottom_center）
+        Label position (parameter retained, currently only supports bottom_center)
     label_fontsize : int, optional
-        标注字体大小，默认为12
+        Label font size, default is 12
     label_fontweight : str, optional
-        标注字体粗细，默认为'normal'
+        Label font weight, default is 'normal'
     label_color : str, optional
-        标注颜色，默认为'black'
+        Label color, default is 'black'
     label_bbox : bool, optional
-        是否为标注添加白色背景框，默认为False（不添加，避免遮挡）
+        Whether to add white background box to labels, default is False (no box to avoid occlusion)
     spacing : float, optional
-        子图之间的间距比例，默认为0.02（2%）
+        Spacing ratio between subfigures, default is 0.02 (2%)
     dpi : int, optional
-        输出DPI，默认为300
+        Output DPI, default is 300
 
     Returns
     -------
     Path
-        输出文件路径
+        Output file path
     """
-    # 转换为Path对象
+    # Convert to Path objects
     input_files = [Path(f) for f in input_files]
     output_file = Path(output_file)
 
-    # 检查输入文件
+    # Check input files
     for f in input_files:
         if not f.exists():
             raise FileNotFoundError(f"Input file not found: {f}")
 
     n_images = len(input_files)
 
-    # 自动计算布局
+    # Auto-calculate layout
     if layout is None:
         if n_images <= 3:
             layout = (1, n_images)
@@ -124,65 +124,65 @@ def combine_figures(
 
     nrows, ncols = layout
 
-    # 检查布局是否足够
+    # Check if layout is sufficient
     if nrows * ncols < n_images:
         raise ValueError(f"Layout {layout} is too small for {n_images} images")
 
-    # 自动生成标注（小写字母）
+    # Auto-generate labels (lowercase letters)
     if labels is None:
         labels = []
         for i in range(n_images):
             if i < 26:
-                labels.append(chr(97 + i))  # a-z (小写)
+                labels.append(chr(97 + i))  # a-z (lowercase)
             else:
                 q, r = divmod(i, 26)
                 labels.append(chr(97 + q - 1) + chr(97 + r))  # aa, ab, ...
 
-    # 检查标注数量
+    # Check label count
     if len(labels) < n_images:
         raise ValueError(f"Not enough labels ({len(labels)}) for {n_images} images")
 
-    # 设置matplotlib样式
+    # Set matplotlib style
     setup_matplotlib_style()
 
-    # 读取所有图片
+    # Read all images
     images = [mpimg.imread(str(f)) for f in input_files]
 
-    # 计算图片尺寸（假设所有图片尺寸相同，使用第一张图片的尺寸）
+    # Calculate image dimensions (assume all images have same size, use first image dimensions)
     img_height, img_width = images[0].shape[:2]
 
-    # 计算figure尺寸（英寸）
+    # Calculate figure size (inches)
     original_dpi = 300
     subplot_width_inch = img_width / original_dpi
     subplot_height_inch = img_height / original_dpi
 
-    # 为外部标签预留额外空间
-    label_height_inch = label_fontsize / 72.0 * 2.5  # 字体大小的2.5倍作为标签区域高度
+    # Reserve extra space for external labels
+    label_height_inch = label_fontsize / 72.0 * 2.5  # 2.5 times font size as label area height
 
-    # 子图间隙计算（英寸）
+    # Calculate subplot spacing (inches)
     hspace_inch = spacing * subplot_width_inch
     vspace_inch = spacing * subplot_height_inch + label_height_inch * 0.3
 
-    # 计算总figure尺寸
+    # Calculate total figure size
     fig_width = subplot_width_inch * ncols + hspace_inch * (ncols - 1)
     fig_height = (subplot_height_inch + label_height_inch) * nrows + vspace_inch * (nrows - 1)
 
-    # 创建figure
+    # Create figure
     fig = plt.figure(figsize=(fig_width, fig_height))
 
-    # 使用GridSpec精确控制布局
-    # 每行包含子图和标签两个grid行
+    # Use GridSpec for precise layout control
+    # Each row contains two grid rows: subfigure and label
     row_heights = []
     for _ in range(nrows):
-        row_heights.append(subplot_height_inch)  # 子图高度
-        row_heights.append(label_height_inch)   # 标签区域高度
+        row_heights.append(subplot_height_inch)  # Subfigure height
+        row_heights.append(label_height_inch)   # Label area height
 
-    # 计算hspace和wspace（相对比例）
+    # Calculate hspace and wspace (relative ratios)
     avg_height = (subplot_height_inch + label_height_inch) / 2
     avg_width = subplot_width_inch
 
     gs = gridspec.GridSpec(
-        nrows=nrows * 2,  # 每行拆分为2个grid：子图 + 标签
+        nrows=nrows * 2,  # Each row split into 2 grids: subfigure + label
         ncols=ncols,
         figure=fig,
         height_ratios=row_heights,
@@ -190,21 +190,21 @@ def combine_figures(
         wspace=hspace_inch / avg_width
     )
 
-    # 绘制每个子图及其标签
+    # Draw each subfigure and its label
     for idx, (img, label) in enumerate(zip(images, labels)):
-        grid_row = (idx // ncols) * 2  # 每个子图占据两行grid（图 + 标签）
+        grid_row = (idx // ncols) * 2  # Each subfigure occupies two grid rows (image + label)
         grid_col = idx % ncols
 
-        # 创建子图（占据第grid_row行）
+        # Create subfigure (occupies grid_row)
         ax_img = fig.add_subplot(gs[grid_row, grid_col])
         ax_img.imshow(img)
         ax_img.axis('off')
 
-        # 创建标签区域（占据第grid_row+1行）
+        # Create label area (occupies grid_row+1)
         ax_label = fig.add_subplot(gs[grid_row + 1, grid_col])
         ax_label.axis('off')
 
-        # 在标签区域添加文本（中心位置）
+        # Add text in label area (centered)
         label_text = f'({label})'
 
         bbox_props = dict(
@@ -225,16 +225,16 @@ def combine_figures(
             bbox=bbox_props
         )
 
-    # 保存图片（不使用tight_layout，因为我们已经精确控制了布局）
+    # Save figure (don't use tight_layout as we've precisely controlled the layout)
     output_file.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(
         output_file,
         format='png',
         dpi=dpi,
-        bbox_inches=None,  # 不裁剪，使用精确计算的尺寸
+        bbox_inches=None,  # Don't crop, use precisely calculated size
         facecolor='white',
         edgecolor='none',
-        pad_inches=0.05  # 小的边距
+        pad_inches=0.05  # Small margin
     )
     plt.close(fig)
 
@@ -244,17 +244,17 @@ def combine_figures(
 
 
 def main():
-    """测试函数"""
+    """Test function"""
     import tempfile
 
-    # 创建测试图片
+    # Create test images
     test_dir = Path(tempfile.mkdtemp())
     print(f"Test directory: {test_dir}")
 
-    # 生成3张测试图片
+    # Generate 3 test images
     for i, label in enumerate(['a', 'b', 'c']):
         fig, ax = plt.subplots(figsize=(4, 3))
-        # 添加一些内容到图片底部，测试标签是否遮挡
+        # Add content to image bottom to test label occlusion
         ax.text(0.5, 0.5, f'Test Image {label.upper()}',
                ha='center', va='center', fontsize=24, fontweight='bold')
         ax.text(0.5, 0.05, 'Bottom content (should not be occluded)',
@@ -267,7 +267,7 @@ def main():
         plt.close(fig)
         print(f"Created: {test_file}")
 
-    # 测试拼接（1x3布局）
+    # Test combination (1x3 layout)
     print("\n=== Test 1: 1x3 layout ===")
     input_files = [test_dir / f'test_{label}.png' for label in ['a', 'b', 'c']]
     output_file = test_dir / 'combined_1x3.png'
@@ -280,9 +280,9 @@ def main():
         spacing=0.03
     )
 
-    # 测试拼接（2x2布局）
+    # Test combination (2x2 layout)
     print("\n=== Test 2: 2x2 layout ===")
-    # 创建第4张图片
+    # Create 4th image
     fig, ax = plt.subplots(figsize=(4, 3))
     ax.text(0.5, 0.5, 'Test Image D',
            ha='center', va='center', fontsize=24, fontweight='bold')
