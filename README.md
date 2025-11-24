@@ -1,7 +1,7 @@
 # Three-Channel Correlation Algorithm - Code and Data
 
 This repository contains the code and data for the paper:
-**"Two-Path Coefficient of Variation: A Novel Quality Criterion for Three-Channel Self-Noise Estimation"**
+**"A Novel Quality Criterion for Self-Noise Measurement of Velocity-Type Seismometers"**
 
 ## Quick Start
 
