@@ -3,6 +3,22 @@
 This repository contains the code and data for the paper:
 **"A Novel Quality Criterion for Self-Noise Measurement of Velocity-Type Seismometers"**
 
+## Citation
+
+If you use this code, please cite:
+```
+@article{li2026novel,
+  title={A novel quality criterion for self-noise measurement of velocity-type seismometers},
+  author={Li, Ang and Yang, Hongyuan and Zhang, Huaizhu and Zheng, Fan and Zhang, Linhang and Liu, Can and Li, Ruojin},
+  journal={Measurement Science and Technology},
+  volume={37},
+  number={8},
+  pages={085101},
+  year={2026},
+  publisher={IOP Publishing}
+}
+```
+
 ## Quick Start
 
 ### Generate Figures (Recommended)
@@ -135,12 +151,6 @@ TPCV serves as a quality indicator:
 - SciencePlots >= 2.0.0
 - Pillow >= 9.0.0
 
-## Citation
-
-If you use this code, please cite:
-```
-[Paper citation to be added after publication]
-```
 
 ## License
 
